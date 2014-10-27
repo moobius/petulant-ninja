@@ -52,6 +52,62 @@ class Site;
 class Node;
 class ThreadManager;
 
+class ThreadManager
+{
+public:
+      ThreadManager() {};
+      ~ThreadManager() {};
+      void add(Thread *thread)
+      {
+            threads.push_back(thread);
+            thread->run();
+      };
+      void wait()
+      {
+            for (std::list<Thread *>::iterator iter = threads.begin(); iter != threads.end(); ++iter)
+            {
+                  Thread *thread = *iter;
+                  thread->join();
+            }
+      };
+private:
+      std::list<Thread *> threads;
+};
+
+class Thread
+{
+public:
+      void run()
+      {
+            pthread_create(thread, NULL, work, args);
+            running = true;
+      };
+      void join()
+      {
+            if (running)
+                  pthread_join(thread, NULL);
+            running = false;
+      }
+      virtual void *work(void *);
+protected:
+      pthread_t *thread;
+      bool running;
+      void *args;
+      void *ret;
+};
+
+class Gatherer : public Thread
+{
+public:
+      Gatherer() {};
+      ~Gatherer() {};
+      void *work(void *args)
+      {
+
+      };
+      
+};
+
 class Blockchain
 {
 public:
@@ -116,7 +172,7 @@ public:
       };
       void distribute()
       {
-            ThreadManager distributor_manager();
+            ThreadManager thread_manager();
             size_t chunk_size = 4; // Should be a weighted calculation somehow
             this.size = size;
             for (uint64_t wptr = 0; wptr < size; ++wptr)
