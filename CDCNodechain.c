@@ -4,11 +4,12 @@
 #include "CDCNodechain.h"
 #include "CDCUtil.h"
 
+// TODO: This needs to be the string table
 struct _CDCNodechain {
 	CDCNode **node_list;
 	int node_list_count;
 	int node_list_capacity;
-
+      CDCStringTable *string_table; // Maps files to nodes
 };
 
 CDCNodechain *new_CDCNodechain()
@@ -44,7 +45,7 @@ void CDCNodechain_double(CDCNodechain *nodechain)
 	nodechain->node_list = new_node_list;
 }
 
-CDCError CDCNodechain_insert(CDCNodechain *nodechain, CDCNode *node)
+CDCError CDCNodechain_insert(CDCNodechain *nodechain, void *data, size_t size, char *key)
 {
 	CDCError return_error = kCDCError_Success;
 	if (nodechain->node_list_count >= nodechain->node_list_capacity)
@@ -54,3 +55,14 @@ CDCError CDCNodechain_insert(CDCNodechain *nodechain, CDCNode *node)
 	++nodechain->node_list_count;
 	return return_error;
 }
+
+CDCError CDCNodechain_lookup(CDCNodechain *nodechain, void **data, size_t *size, char *key)
+{
+      CDCError return_error = kCDCError_Success;
+      Nodelist *node_list = CDCStringTable_lookup(nodechain->string_table, key);
+      CDCGatherer *gatherer = new_CDCGatherer(data, size);
+      CDCGatherer_gather(gatherer, node_list); // This will block
+      delete_CDCGatherer(gatherer);
+      return return_error;
+}
+
