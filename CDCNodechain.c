@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <string.h>
 #include "CDCNodechain.h"
@@ -6,10 +5,8 @@
 
 // TODO: This needs to be the string table
 struct _CDCNodechain {
-	CDCNode **node_list;
-	int node_list_count;
-	int node_list_capacity;
-      CDCStringTable *string_table; // Maps files to nodes
+	CDCNodelist *nodelist;
+	CDCStringTable *string_table; // Maps files to nodes
 };
 
 CDCNodechain *new_CDCNodechain()
