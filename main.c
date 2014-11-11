@@ -4,6 +4,7 @@
 typedef enum {
 	kCDCInstance_Client,
 	kCDCInstance_Server,
+	kCDCInstance_Size,
 } CDCInstance;
 
 typedef struct {
@@ -14,6 +15,7 @@ CDCError launch_CDCClient()
 {
 	CDCError return_error;
 	CDCClient *client = new_CDCClient();
+	CDCClient_run(client);
 	delete_CDCClient(client);
 	return return_error;
 }
@@ -22,6 +24,7 @@ CDCError launch_CDCServer()
 {
 	CDCError return_error;
 	CDCServer *server = new_CDCServer();
+	CDCServer_run(server);
 	delete_CDCServer(server);
 	return return_error;
 }
@@ -31,7 +34,7 @@ int main(void)
 	CDCError return_error = kCDCError_Success;
 
 	CDCOptions options = {
-                           .instance = kCDCInstance_Server,
+                           .instance = kCDCInstance_Client,
 	                     };
 
 	switch (options.instance)
