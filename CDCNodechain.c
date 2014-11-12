@@ -6,7 +6,8 @@
 // TODO: This needs to be the string table
 struct _CDCNodechain {
 	CDCNodelist *nodelist;
-	CDCStringTable *string_table; // Maps files to nodes
+	//CDCStringTable *string_table; // Maps files to nodes
+	int i;
 };
 
 CDCNodechain *new_CDCNodechain()
