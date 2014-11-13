@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "CDCNode.h"
 
 struct _CDCNode {

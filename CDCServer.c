@@ -2,21 +2,20 @@
 #include "CDCServer.h"
 
 struct _CDCServer {
-	Nodechain *nodechain;
-
+	int i;
 };
 
 CDCServer *new_CDCServer()
 {
 	CDCServer *server = malloc(sizeof(CDCServer));
-	server->nodechain = new_CDCNodechain();
+	server->i = 0;
 	return server;
 }
 
 CDCError delete_CDCServer(CDCServer *server)
 {
+	CDCAssert(server != NULL);
 	CDCError return_error = kCDCError_Success;
-	delete_CDCNodechain(server->nodechain);
 	free(server);
 	return return_error;
 }
@@ -24,6 +23,7 @@ CDCError delete_CDCServer(CDCServer *server)
 CDCError CDCServer_run(CDCServer *server)
 {
 	CDCError return_error = kCDCError_Success;
+	printf("%p\n", server);
 	// Add some things to the nodechain
 	return return_error;
 }

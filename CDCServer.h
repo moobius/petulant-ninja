@@ -1,6 +1,7 @@
 #ifndef __CDCSERVER_H__
 #define __CDCSERVER_H__
 #include "CDCError.h"
+#include "CDCDebug.h"
 
 typedef struct _CDCServer CDCServer;
 

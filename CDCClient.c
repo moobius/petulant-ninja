@@ -4,8 +4,7 @@
 #include "CDCClient.h"
 
 struct _CDCClient {
-	//CDCStringTable *string_table;
-
+	int i;
 };
 
 typedef struct _CDCRequest CDCRequest;
@@ -36,6 +35,13 @@ CDCError delete_CDCClient(CDCClient *client)
 	return return_error;
 }
 
+CDCError CDCClient_request(CDCClient *c, CDCRequest *r)
+{
+	c = (CDCClient*)r;
+	printf("%p\n", c);
+	return kCDCError_Success;
+}
+
 CDCError CDCClient_run(CDCClient *client)
 {
 	CDCError return_error = kCDCError_Success;
@@ -43,16 +49,9 @@ CDCError CDCClient_run(CDCClient *client)
 	// Distribute a file
 	//  - Request some nodes from the nodechain
 	CDCRequest node_request = { .request_type = kCDCRequestType_Nodes };
-	TRY(return_error, CDCClient_request(client, &node_request));
-	CDCNode **nodes = node_request.data.nodes;
-	FILE *my_file = NULL;
-	TRY(return_error, CDCClient_distribute(my_file, nodes));
-	CDCRequest file_request = { .request_type = kCDCRequestType_File };
-	TRY(return_error, CDCClient_gather(my_file, nodes));
-	// Request that same file
+	if ((return_error = CDCClient_request(client, &node_request)) != kCDCError_Success)
+		goto bail;
 
-	return return_error;
-	CATCH
-	// Handle catch
+bail:
 	return return_error;
 }

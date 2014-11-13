@@ -1,3 +1,4 @@
+#include "CDCError.h"
 #include "CDCServer.h"
 #include "CDCClient.h"
 
@@ -13,7 +14,7 @@ typedef struct {
 
 CDCError launch_CDCClient()
 {
-	CDCError return_error;
+	CDCError return_error = kCDCError_Success;
 	CDCClient *client = new_CDCClient();
 	CDCClient_run(client);
 	delete_CDCClient(client);
@@ -22,9 +23,9 @@ CDCError launch_CDCClient()
 
 CDCError launch_CDCServer()
 {
-	CDCError return_error;
+	CDCError return_error = kCDCError_Success;
 	CDCServer *server = new_CDCServer();
-	CDCServer_run(server);
+	TRY(CDCServer_run(server));
 	delete_CDCServer(server);
 	return return_error;
 }
@@ -41,7 +42,7 @@ int main(void)
 	{
 		case kCDCInstance_Client: return_error = launch_CDCClient(); break;
 		case kCDCInstance_Server: return_error = launch_CDCServer(); break;
-		case default: break;
+		default: break;
 	}
 
 	return return_error;
