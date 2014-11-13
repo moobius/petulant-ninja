@@ -3,18 +3,12 @@ HSRC  = \
 	CDCClient.h \
 	CDCDebug.h \
 	CDCError.h \
-	CDCNodechain.h \
 	CDCNode.h \
-	CDCNodelist.h \
 	CDCServer.h \
-	CDCUtil.h
 CSRC  = \
 	CDCClient.c \
 	CDCNode.c \
-	CDCNodechain.c \
-	CDCNodelist.c \
 	CDCServer.c \
-	CDCUtil.c \
 	main.c
 COBJ  = $(CSRC:.c=.o)
 EXE   = cdc
